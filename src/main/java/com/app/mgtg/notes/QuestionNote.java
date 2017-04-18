@@ -15,4 +15,9 @@ public class QuestionNote implements Note {
         this.metals = metals;
         this.line = line;
     }
+
+    @Override
+    public void process() {
+
+    }
 }

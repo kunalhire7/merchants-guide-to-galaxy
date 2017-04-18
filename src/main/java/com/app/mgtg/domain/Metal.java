@@ -16,4 +16,21 @@ public class Metal {
     public int getValue() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Metal)) return false;
+
+        Metal metal = (Metal) o;
+
+        return getValue() == metal.getValue() && getName().equals(metal.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getName().hashCode();
+        result = 31 * result + getValue();
+        return result;
+    }
 }

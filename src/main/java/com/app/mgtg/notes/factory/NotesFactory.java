@@ -14,7 +14,7 @@ public class NotesFactory {
         String[] tokens = line.split(" ");
 
         if(tokens.length == 3 && line.contains("is")) {
-            return new GalacticSymbolNote(line, galacticSymbols, metals);
+            return new GalacticSymbolNote(line, galacticSymbols);
         } else if(line.endsWith("Credits")) {
             return new MetalNote(line, galacticSymbols, metals);
         } else if(line.endsWith("?")) {
