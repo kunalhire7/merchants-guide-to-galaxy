@@ -14,4 +14,6 @@ repositories {
 
 dependencies {
     testCompile group: 'org.spockframework', name: 'spock-core', version: '0.6-groovy-1.8'
+    testCompile group: 'cglib', name: 'cglib-nodep', version: '2.2'
+    testCompile group: 'org.objenesis', name: 'objenesis', version: '1.2'
 }
