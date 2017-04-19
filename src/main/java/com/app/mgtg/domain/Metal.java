@@ -2,9 +2,9 @@ package com.app.mgtg.domain;
 
 public class Metal {
     private String name;
-    private int value;
+    private float value;
 
-    public Metal(String name, int value) {
+    public Metal(String name, float value) {
         this.name = name;
         this.value = value;
     }
@@ -13,7 +13,7 @@ public class Metal {
         return name;
     }
 
-    public int getValue() {
+    public float getValue() {
         return value;
     }
 
@@ -24,13 +24,13 @@ public class Metal {
 
         Metal metal = (Metal) o;
 
-        return getValue() == metal.getValue() && getName().equals(metal.getName());
+        return Float.compare(metal.getValue(), getValue()) == 0 && getName().equals(metal.getName());
     }
 
     @Override
     public int hashCode() {
         int result = getName().hashCode();
-        result = 31 * result + getValue();
+        result = 31 * result + (getValue() != +0.0f ? Float.floatToIntBits(getValue()) : 0);
         return result;
     }
 }

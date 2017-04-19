@@ -51,8 +51,8 @@ public class QuestionNote implements Note {
 
         try {
             if (metal.isPresent()) {
-                int creditsForNoOfUnits = converter.convert(galacticSymbols.getRomanNumberForSymbols(symbolsInNote.toString())) * metal.get().getValue();
-                sb.append(symbolsInNote).append(metal.get().getName()).append(" is ").append(creditsForNoOfUnits).append(" Credits");
+                Float creditsForNoOfUnits = converter.convert(galacticSymbols.getRomanNumberForSymbols(symbolsInNote.toString())) * metal.get().getValue();
+                sb.append(symbolsInNote).append(metal.get().getName()).append(" is ").append(creditsForNoOfUnits.intValue()).append(" Credits");
                 System.out.println(sb.toString());
             } else {
                 System.out.println("No metal found in question note.\n Exiting..");

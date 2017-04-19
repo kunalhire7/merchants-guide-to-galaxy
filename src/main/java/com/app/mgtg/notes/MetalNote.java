@@ -41,11 +41,11 @@ public class MetalNote implements Note {
             }
         }
 
-        int valueForSingleUnit = computeValue(valueForGivenUnits, galacticSymbols.getRomanNumberForSymbols(symbolsInNote.toString()));
+        float valueForSingleUnit = computeValue(valueForGivenUnits, galacticSymbols.getRomanNumberForSymbols(symbolsInNote.toString()));
         metals.add(new Metal(metalName, valueForSingleUnit));
     }
 
-    private int computeValue(int valueForGivenUnits, String romanNumber) {
+    private float computeValue(int valueForGivenUnits, String romanNumber) {
         RomanToDecimalConverter converter = new RomanToDecimalConverter();
         int decimalValue = 1;
         try {
@@ -53,7 +53,7 @@ public class MetalNote implements Note {
         } catch (MerchantsGuideToGalaxyException e) {
             e.printStackTrace();
         }
-        return valueForGivenUnits / decimalValue;
+        return (float) valueForGivenUnits / decimalValue;
     }
 
     public Metals getMetals() {
