@@ -1,5 +1,7 @@
 package com.app.mgtg.notes.factory
 
+import com.app.mgtg.domain.GalacticSymbols
+import com.app.mgtg.domain.Metals
 import com.app.mgtg.notes.GalacticSymbolNote
 import com.app.mgtg.notes.InvalidNote
 import com.app.mgtg.notes.MetalNote
@@ -10,7 +12,7 @@ class NotesFactorySpec extends Specification {
 
     def "should return correct instance of Note for given line"() {
         when:
-        def note = NotesFactory.getNote(line, [], [])
+        def note = NotesFactory.getNote(line, new GalacticSymbols(), new Metals())
 
         then:
         note.class == expectedInstance

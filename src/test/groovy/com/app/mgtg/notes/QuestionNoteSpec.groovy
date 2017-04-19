@@ -1,21 +1,31 @@
 package com.app.mgtg.notes
 
 import com.app.mgtg.domain.GalacticSymbol
+import com.app.mgtg.domain.GalacticSymbols
 import com.app.mgtg.domain.Metal
+import com.app.mgtg.domain.Metals
 import spock.lang.Specification
 
 import static com.app.mgtg.constants.Constants.UNKNOWN_ANSWER
-import static com.app.mgtg.domain.RomanSymbol.I
-import static com.app.mgtg.domain.RomanSymbol.L
-import static com.app.mgtg.domain.RomanSymbol.V
-import static com.app.mgtg.domain.RomanSymbol.X
+import static com.app.mgtg.domain.RomanSymbol.*
 
 class QuestionNoteSpec extends Specification {
 
     Note note
     PrintStream out
+    GalacticSymbols galacticSymbols
+    Metals metals
 
     def setup() {
+        galacticSymbols = new GalacticSymbols()
+        galacticSymbols.add(new GalacticSymbol("glob", I))
+        galacticSymbols.add(new GalacticSymbol("prok", V))
+        galacticSymbols.add(new GalacticSymbol("tegj", L))
+        galacticSymbols.add(new GalacticSymbol("pish", X))
+
+        metals = new Metals()
+        metals.add(new Metal("Silver", 17))
+
         out = Mock(PrintStream)
         System.setOut(out)
     }
@@ -23,8 +33,6 @@ class QuestionNoteSpec extends Specification {
     def "should process the question note staring with 'how many'"() {
         given:
         def line = "how many Credits is glob prok Silver ?"
-        def galacticSymbols = [new GalacticSymbol("glob", I), new GalacticSymbol("prok", V)]
-        def metals = [new Metal("Silver", 17)]
         note = new QuestionNote(line, galacticSymbols, metals)
 
         when:
@@ -37,8 +45,6 @@ class QuestionNoteSpec extends Specification {
     def "should print UNKNOWN ANSWER for unknown question"() {
         given:
         def line = "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
-        def galacticSymbols = [new GalacticSymbol("glob", I), new GalacticSymbol("prok", V)]
-        def metals = [new Metal("Silver", 17)]
         note = new QuestionNote(line, galacticSymbols, metals)
 
         when:
@@ -51,8 +57,6 @@ class QuestionNoteSpec extends Specification {
     def "should process the question note staring with 'how much is'"() {
         given:
         def line = "how much is pish tegj glob glob ?"
-        def galacticSymbols = [new GalacticSymbol("glob", I), new GalacticSymbol("pish", X), new GalacticSymbol("tegj", L)]
-        def metals = []
         note = new QuestionNote(line, galacticSymbols, metals)
 
         when:

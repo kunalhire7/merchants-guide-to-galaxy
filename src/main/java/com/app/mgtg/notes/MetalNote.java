@@ -1,22 +1,21 @@
 package com.app.mgtg.notes;
 
 import com.app.mgtg.converter.RomanToDecimalConverter;
-import com.app.mgtg.domain.GalacticSymbol;
+import com.app.mgtg.domain.GalacticSymbols;
 import com.app.mgtg.domain.Metal;
+import com.app.mgtg.domain.Metals;
 import com.app.mgtg.exceptions.MerchantsGuideToGalaxyException;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
+import static com.app.mgtg.constants.Constants.KEYWORDS;
+import static com.app.mgtg.util.MgtgUtility.isNumeric;
 import static java.lang.Integer.parseInt;
 
 public class MetalNote implements Note {
-    private List<GalacticSymbol> galacticSymbols;
-    private List<Metal> metals;
+    private GalacticSymbols galacticSymbols;
+    private Metals metals;
     private String line;
 
-    public MetalNote(String line, List<GalacticSymbol> galacticSymbols, List<Metal> metals) {
+    public MetalNote(String line, GalacticSymbols galacticSymbols, Metals metals) {
         this.galacticSymbols = galacticSymbols;
         this.metals = metals;
         this.line = line;
@@ -25,24 +24,25 @@ public class MetalNote implements Note {
     @Override
     public void process() {
         String[] tokens = line.split(" ");
-        final String[] symbol = {""};
-        final String[] metalName = {""};
-        final int[] valueForGivenUnits = {0};
-        Arrays.stream(tokens).forEach(token -> {
-            if (!token.equals("is") && !token.equals("Credits")) {
-                Optional<GalacticSymbol> galacticSymbol = getGalacticSymbol(token);
-                galacticSymbol.ifPresent(gs -> symbol[0] += gs.getValue().toString());
-                if (!galacticSymbol.isPresent()) {
+        String metalName = null;
+        int valueForGivenUnits = 0;
+        StringBuilder symbolsInNote = new StringBuilder();
+        for(String token : tokens) {
+            if (!KEYWORDS.contains(token)) {
+                if(galacticSymbols.isGalacticSymbol(token)) {
+                    symbolsInNote.append(token).append(" ");
+                } else {
                     if (isNumeric(token)) {
-                        valueForGivenUnits[0] = parseInt(token);
+                        valueForGivenUnits = parseInt(token);
                     } else {
-                        metalName[0] = token;
+                        metalName = token;
                     }
                 }
             }
-        });
-        int valueFoeSingleUnit = computeValue(valueForGivenUnits[0], symbol[0]);
-        metals.add(new Metal(metalName[0], valueFoeSingleUnit));
+        }
+
+        int valueForSingleUnit = computeValue(valueForGivenUnits, galacticSymbols.getRomanNumberForSymbols(symbolsInNote.toString()));
+        metals.add(new Metal(metalName, valueForSingleUnit));
     }
 
     private int computeValue(int valueForGivenUnits, String romanNumber) {
@@ -56,16 +56,7 @@ public class MetalNote implements Note {
         return valueForGivenUnits / decimalValue;
     }
 
-    private boolean isNumeric(String token) {
-        try {
-            parseInt(token);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        return true;
-    }
-
-    private Optional<GalacticSymbol> getGalacticSymbol(String token) {
-        return galacticSymbols.stream().filter(symbol -> symbol.getName().equals(token)).findFirst();
+    public Metals getMetals() {
+        return metals;
     }
 }
