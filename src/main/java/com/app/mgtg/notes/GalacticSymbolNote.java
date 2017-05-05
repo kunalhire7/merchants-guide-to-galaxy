@@ -7,16 +7,14 @@ import static com.app.mgtg.domain.RomanSymbol.getSymbolFor;
 
 public class GalacticSymbolNote implements Note {
     private GalacticSymbols galacticSymbols;
-    private String line;
 
-    public GalacticSymbolNote(String line, GalacticSymbols galacticSymbols) {
+    public GalacticSymbolNote(GalacticSymbols galacticSymbols) {
         this.galacticSymbols = galacticSymbols;
-        this.line = line;
     }
 
     @Override
-    public void process() {
-        String[] tokens = line.split(" ");
+    public void process(String note) {
+        String[] tokens = note.split(" ");
         galacticSymbols.add(new GalacticSymbol(tokens[0], getSymbolFor(tokens[2])));
     }
 

@@ -14,22 +14,20 @@ import static com.app.mgtg.constants.Constants.UNKNOWN_ANSWER;
 public class QuestionNote implements Note {
     private GalacticSymbols galacticSymbols;
     private Metals metals;
-    private String line;
 
-    public QuestionNote(String line, GalacticSymbols galacticSymbols, Metals metals) {
+    public QuestionNote(GalacticSymbols galacticSymbols, Metals metals) {
         this.galacticSymbols = galacticSymbols;
         this.metals = metals;
-        this.line = line;
     }
 
     @Override
-    public void process() {
+    public void process(String note) {
         final RomanToDecimalConverter converter = new RomanToDecimalConverter();
-        String[] tokens = line.split(" ");
+        String[] tokens = note.split(" ");
         final StringBuilder sb = new StringBuilder();
-        if (line.startsWith("how many")) {
+        if (note.startsWith("how many")) {
             processHowManyNote(converter, tokens, sb);
-        } else if (line.startsWith("how much is")) {
+        } else if (note.startsWith("how much is")) {
             processHowMuchNote(converter, tokens, sb);
         } else {
             System.out.println(UNKNOWN_ANSWER);

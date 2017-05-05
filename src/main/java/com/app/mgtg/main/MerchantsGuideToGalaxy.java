@@ -21,7 +21,7 @@ public class MerchantsGuideToGalaxy {
         String inputFilePath = scanner.nextLine();
         try (Stream<String> stream = Files.lines(Paths.get(inputFilePath))) {
 
-            stream.forEach(line -> NotesFactory.getNote(line, galacticSymbols, metals).process());
+            stream.forEach(note -> NotesFactory.getNote(note, galacticSymbols, metals).process(note));
 
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage() + "\nExiting..");

@@ -13,17 +13,15 @@ import static java.lang.Integer.parseInt;
 public class MetalNote implements Note {
     private GalacticSymbols galacticSymbols;
     private Metals metals;
-    private String line;
 
-    public MetalNote(String line, GalacticSymbols galacticSymbols, Metals metals) {
+    public MetalNote(GalacticSymbols galacticSymbols, Metals metals) {
         this.galacticSymbols = galacticSymbols;
         this.metals = metals;
-        this.line = line;
     }
 
     @Override
-    public void process() {
-        String[] tokens = line.split(" ");
+    public void process(String note) {
+        String[] tokens = note.split(" ");
         String metalName = null;
         int valueForGivenUnits = 0;
         StringBuilder symbolsInNote = new StringBuilder();

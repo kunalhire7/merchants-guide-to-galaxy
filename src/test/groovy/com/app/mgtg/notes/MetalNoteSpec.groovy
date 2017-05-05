@@ -16,10 +16,10 @@ class MetalNoteSpec extends Specification {
         given:
         def galacticSymbols = new GalacticSymbols()
         galacticSymbols.add(new GalacticSymbol("glob", I))
-        note = new MetalNote("glob glob Silver is 34 Credits", galacticSymbols, new Metals())
+        note = new MetalNote(galacticSymbols, new Metals())
 
         when:
-        note.process()
+        note.process("glob glob Silver is 34 Credits")
 
         then:
         note.metals.metals == [new Metal("Silver", 17)]

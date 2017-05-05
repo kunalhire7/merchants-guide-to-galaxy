@@ -12,11 +12,11 @@ public class NotesFactory {
         String[] tokens = line.split(" ");
 
         if(tokens.length == 3 && line.contains("is")) {
-            return new GalacticSymbolNote(line, galacticSymbols);
+            return new GalacticSymbolNote(galacticSymbols);
         } else if(line.endsWith("Credits")) {
-            return new MetalNote(line, galacticSymbols, metals);
+            return new MetalNote(galacticSymbols, metals);
         } else if(line.endsWith("?")) {
-            return new QuestionNote(line, galacticSymbols, metals);
+            return new QuestionNote(galacticSymbols, metals);
         } else {
             return new InvalidNote();
         }

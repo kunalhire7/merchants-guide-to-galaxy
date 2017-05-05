@@ -11,10 +11,10 @@ class GalacticSymbolNoteSpec extends Specification {
 
     def "should process the galactic symbol note"() {
         given:
-        note = new GalacticSymbolNote("glob is I", new GalacticSymbols())
+        note = new GalacticSymbolNote(new GalacticSymbols())
 
         when:
-        note.process()
+        note.process("glob is I")
 
         then:
         note.galacticSymbols.symbols == [new GalacticSymbol("glob", I)]
